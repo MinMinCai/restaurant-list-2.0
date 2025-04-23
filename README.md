@@ -16,7 +16,7 @@
   1. 請先確認有安裝 node.js 與 npm
   2. 將專案 clone 到本地
   ```bash
-  git clone https://github.com/MyHomeWorkTW/A1_built_restaurant_list.git
+  git clone https://github.com/MinMinCai/restaurant-list.git
   ```
   3. 在本地開啟之後，透過終端機進入資料夾，輸入：
   ```bash
