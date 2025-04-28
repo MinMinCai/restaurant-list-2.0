@@ -7,6 +7,9 @@
           width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
         我的餐廳清單
       </a>
+      <a href="./restaurants/new">
+      <button>新增餐廳</button>
+      </a>
     </div>
   </nav>
 
@@ -38,7 +41,7 @@
       <div class="row row-cols-sm-3">
 
         {{#each restaurants}}
-        <a href="/restaurants/{{this.id}}" class="text-secondary">
+        <a href="/restaurants/{{this._id}}" class="text-secondary">
           <div class="card mb-3">
             <img class="card-img-top" src="{{this.image}}"
               alt="{{this.name}}">
@@ -53,8 +56,12 @@
                 {{this.rating}}
                 <i class="fas fa-star fa-xs"></i>
               </span>
-
             </div>
+            <a href="./restaurants/{{ this._id }}">Detail</a>
+            <a href="./restaurants/{{ this._id }}/edit">Edit</a>
+            <form action="./restaurants/{{ this._id }}/delete" method="POST" style="display: inline;">
+              <button type="submit">Delete</button>
+            </form>
           </div>
         </a>
         {{/each}}

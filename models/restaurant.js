@@ -24,7 +24,19 @@ const restaurantSchema = new Schema({
   phone: {
     type: String,
     required: true
-  }
+  },
+  google_map: {
+    type: String,
+    required: true
+  },
+  rating: {
+    type: Number,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
 })
 
 // 把這份 model 命名為 Restaurant
