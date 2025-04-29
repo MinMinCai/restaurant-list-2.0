@@ -51,13 +51,13 @@
       <img class="rounded mx-auto d-block mb-4 w-100" src="{{restaurant.image}}" alt="{{restaurant.name}}"
         style="max-width: 600px;">
       <div class="guide-footer">
-        <form action="./restaurants/{{ restautant._id }}/edit" method="GET" style="display: inline;">
+        <form action="/restaurants/{{ restaurant._id }}/edit" method="GET" style="display: inline;">
           <button type="submit" class="btn btn-outline-secondary">Edit</button>
         </form>
         <form action="/" method="GET" style="display: inline;">
           <button type="submit" class="btn btn-outline-secondary">Back</button>
         </form>
-        <form action="./restaurants/{{ restautant._id }}/delete" method="POST" style="display: inline;">
+        <form action="/restaurants/{{ restaurant._id }}/delete" method="POST" style="display: inline;">
           <button type="submit" class="btn btn-outline-danger">Delete</button>
         </form>
       </div>
