@@ -40,9 +40,8 @@ app.get('/restaurants/new', (req, res) => {
 
 // 取出 req.body.name 的 name 資料，並將其存入 MongoDB 的資料庫中
 app.post('/restaurants', (req, res) => {
-  const restaurant = req.body.name
-  return Restaurant.create({ name: restaurant })
-    .then(() => res.redirect('/'))
+  return Restaurant.create(req.body) // 將整個 req.body 傳入
+    .then(() => res.redirect('/')) // 成功後重新導向首頁
     .catch(error => console.log(error))
 })
 
@@ -64,13 +63,8 @@ app.get('/restaurants/:id/edit', (req, res) => {
 
 app.post('/restaurants/:id/edit', (req, res) => {
   const id = req.params.id
-  const name = req.body.name
-  return Restaurant.findById(id)
-    .then((restaurant) => {
-      restaurant.name = name
-      return restaurant.save()
-    })
-    .then(() => res.redirect(`/restaurants/${id}`))
+  return Restaurant.findByIdAndUpdate(id, req.body) // 更新資料
+    .then(() => res.redirect('/')) // 更新後重新導向首頁
     .catch(error => console.log(error))
 })
 
