@@ -20,6 +20,24 @@ header {
   filter: blur(3px);
 }
 
+.add-restaurant {
+  height: 30px;
+  color: #ffffff;
+  border-radius: 8px;
+  border: none;
+  background-color: #4592af;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-restaurant:hover {
+  height: 30px;
+  color: #ffffff;
+  border-radius: 8px;
+  border: none;
+  background-color: #226089;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
 .search-bar .search-bar-outer {
   margin: 0 auto;
   max-width: 680px;
@@ -64,6 +82,18 @@ header {
   white-space: nowrap;
 }
 
+.card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.card-footer button {
+  flex: 1 1 auto;
+  font-size: clamp(12px, 2vw, 16px);
+}
+
 .restaurant-category {
   color: #666666;
   font-size: 0.8rem;
@@ -83,6 +113,12 @@ header {
   .card img {
     height: 115px;
   }
+
+  .card-footer button {
+    flex: 1 1 100%;
+    font-size: clamp(10px, 2vw, 14px);
+  }
+
 }
 
 @media screen and (max-width: 768px) {
@@ -90,12 +126,23 @@ header {
   .restaurant-show-title {
     font-size: 2rem;
   }
+
+  .card-footer button {
+    flex: 1 1 100%;
+    font-size: clamp(10px, 2vw, 14px);
+  }
+
 }
 
 @media screen and (max-width: 575px) {
 
   .card img {
     height: auto;
+  }
+
+  .card-footer button {
+    flex: 1 1 100%;
+    font-size: clamp(8px, 3vw, 12px);
   }
 
 }

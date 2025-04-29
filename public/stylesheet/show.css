@@ -68,8 +68,23 @@ header {
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.guide-footer {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
 @media screen and (max-width: 768px) {
   .restaurant-show-title {
     font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .guide-footer {
+    flex-wrap: wrap;
+    flex: 1 1 100%;
+    font-size: clamp(8px, 3vw, 12px);
   }
 }
