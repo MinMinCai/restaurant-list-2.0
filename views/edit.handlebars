@@ -1,5 +1,51 @@
-<form action="/restaurants/{{ restaurant._id }}/edit" method="POST">
+{{!-- <form action="/restaurants/{{ restaurant._id }}/edit" method="POST">
   <input type="text" name="name" placeholder="Restaurant Name" value="{{ restaurant.name}}">
   <button type="submit">Save</button>
   <a href="/">Back</a>
-</form>
+</form> --}}
+<div class="banner"></div>
+<div class="container d-flex justify-content-center">
+  <form action="/restaurants/{{ restaurant._id }}/edit" method="POST" class="restaurant-form row g-3">
+    <div class="col-md-8">
+      <label class="form-label">Restaurant Name</label>
+      <input type="text" name="name" placeholder="Restaurant Name" value="{{ restaurant.name }}" class="form-control">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Category</label>
+      <input type="text" name="category" placeholder="Category" value="{{ restaurant.category }}" class="form-control">
+    </div>
+    <div class="col-6 col-12">
+      <label class="form-label">Restaurant Image</label>
+      <input type="text" name="image" placeholder="Restaurant Image" value="{{ restaurant.image }}"
+        class="form-control">
+    </div>
+    <div class="col-md-8">
+      <label class="form-label">Location</label>
+      <input type="text" name="location" placeholder="Location" value="{{ restaurant.location }}" class="form-control">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Phone</label>
+      <input type="text" name="phone" placeholder="Phone" value="{{ restaurant.phone }}" class="form-control">
+    </div>
+    <div class="col-md-8">
+      <label class="form-label">Google Map</label>
+      <input type="text" name="google_map" placeholder="Google Map" value="{{ restaurant.google_map }}"
+        class="form-control">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Rating</label>
+      <input type="text" name="rating" placeholder="Rating" value="{{ restaurant.rating }}" class="form-control">
+    </div>
+    <div class="col-12">
+      <label for="inputAddress2" class="form-label">Description</label>
+      <textarea name="description" placeholder="Description"
+        class="form-control" rows="4">{{ restaurant.description }}</textarea>
+    </div>
+    <div class="form-footer col">
+      <button type="submit" class="btn btn-major">Save</button>
+      <form action="/" method="GET" style="display: inline;">
+        <button type="submit" class="btn btn-secondary">Back</button>
+      </form>
+    </div>
+  </form>
+</div>
