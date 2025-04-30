@@ -21,16 +21,7 @@ db.once('open', () => {
   console.log('mongodb connected!')
 })
 
-// 設定 Handlebars 輔助函數
-const hbs = exphbs.create({
-  helpers: {
-    ifEquals: function (arg1, arg2, options) {
-      return (arg1 == arg2) ? options.fn(this) : options.inverse(this)
-    }
-  }
-})
-
-app.engine('handlebars', hbs.engine)
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -83,7 +74,7 @@ app.get('/restaurants/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.get('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .lean()
@@ -91,14 +82,14 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findByIdAndUpdate(id, req.body) // 更新資料
     .then(() => res.redirect('/')) // 更新後重新導向首頁
     .catch(error => console.log(error))
 })
 
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then((restaurant) => restaurant.remove())
@@ -108,15 +99,10 @@ app.post('/restaurants/:id/delete', (req, res) => {
 
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.toLowerCase()
-  Restaurant.find({
-    $or: [
-      { name: { $regex: keyword, $options: 'i' } },
-      { category: { $regex: keyword, $options: 'i' } }
-    ]
+  const filteredRestaurants = restaurantList.results.filter(restaurant => {
+    return restaurant.name.toLowerCase().includes(keyword) || restaurant.category.toLowerCase().includes(keyword)
   })
-    .lean()
-    .then(restaurants => res.render('index', { restaurants, keyword }))
-    .catch(error => console.log(error))
+  res.render('index', { restaurants: filteredRestaurants, keyword: keyword })
 })
 
 app.listen(port, () => {
