@@ -34,10 +34,23 @@
   </div>
 </div>
 
+
 <!-- restaurant list -->
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
+      <!-- search sort bar -->
+      <form action="/" method="GET" class="search-sort-bar d-flex justify-content-end mb-3">
+        <select name="sort" class="form-select" aria-label="Default select example"
+          style="max-width: 150px; font-size: clamp(12px, 2vw, 14px);" onchange="this.form.submit()">
+          <option value="" {{#if isDefaultSort}}selected{{/if}}>排序方式</option>
+          <option value="A-Z" {{#if sortOption}}{{#ifEquals sortOption "A-Z"}}selected{{/ifEquals}}{{/if}}>A-Z</option>
+          <option value="Z-A" {{#if sortOption}}{{#ifEquals sortOption "Z-A"}}selected{{/ifEquals}}{{/if}}>Z-A</option>
+          <option value="類別" {{#if sortOption}}{{#ifEquals sortOption "類別"}}selected{{/ifEquals}}{{/if}}>類別</option>
+          <option value="評分" {{#if sortOption}}{{#ifEquals sortOption "評分"}}selected{{/ifEquals}}{{/if}}>評分</option>
+        </select>
+      </form>
+
       <div class="row row-cols-sm-3">
 
         {{#each restaurants}}

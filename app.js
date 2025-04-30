@@ -21,16 +21,46 @@ db.once('open', () => {
   console.log('mongodb connected!')
 })
 
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+// 設定 Handlebars 輔助函數
+const hbs = exphbs.create({
+  helpers: {
+    ifEquals: function (arg1, arg2, options) {
+      return (arg1 == arg2) ? options.fn(this) : options.inverse(this)
+    }
+  }
+})
+
+app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // 取出 Restaurant model 的所有資料，並把 MongoDB 的資料庫資料傳給 index.handlebars 
 app.get('/', (req, res) => {
+  const sortOption = req.query.sort
+  let sortCriteria = {}
+
+  if (sortOption === 'A-Z') {
+    sortCriteria = { name: 'asc' }
+  }
+  else if (sortOption === 'Z-A') {
+    sortCriteria = { name: 'desc' }
+  }
+  else if (sortOption === '類別') {
+    sortCriteria = { category: 'asc' }
+  }
+  else if (sortOption === '評分') {
+    sortCriteria = { rating: 'desc' }
+  }
+
   Restaurant.find()
     .lean()
-    .then(restaurants => res.render('index', { restaurants }))
+    .sort(sortCriteria)
+    .then(restaurants => res.render('index', { 
+      restaurants, 
+      sortOption,
+      isDefaultSort: !sortOption 
+    }))
     .catch(error => console.log(error))
 })
 
@@ -78,12 +108,22 @@ app.post('/restaurants/:id/delete', (req, res) => {
 
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.toLowerCase()
-  const filteredRestaurants = restaurantList.results.filter(restaurant => {
-    return restaurant.name.toLowerCase().includes(keyword) || restaurant.category.toLowerCase().includes(keyword)
+  Restaurant.find({
+    $or: [
+      { name: { $regex: keyword, $options: 'i' } },
+      { category: { $regex: keyword, $options: 'i' } }
+    ]
   })
-  res.render('index', { restaurants: filteredRestaurants, keyword: keyword })
+    .lean()
+    .then(restaurants => res.render('index', { restaurants, keyword }))
+    .catch(error => console.log(error))
 })
 
 app.listen(port, () => {
   console.log(`App is running on http://localhost:${port}`)
 })
+
+
+
+
+
