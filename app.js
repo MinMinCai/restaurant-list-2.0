@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars')
 const restaurantList = require('./restaurant.json')
 const Restaurant = require('./models/restaurant')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 
 const mongoose = require('mongoose')
 const restaurant = require('./models/restaurant')
@@ -25,6 +26,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 // 取出 Restaurant model 的所有資料，並把 MongoDB 的資料庫資料傳給 index.handlebars 
 app.get('/', (req, res) => {

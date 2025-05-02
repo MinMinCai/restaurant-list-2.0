@@ -5,7 +5,7 @@
 </form> --}}
 <div class="banner"></div>
 <div class="container d-flex justify-content-center">
-  <form action="/restaurants/{{ restaurant._id }}/edit" method="POST" class="restaurant-form row g-3">
+  <form action="/restaurants/{{ restaurant._id }}?_method=PUT" method="POST" class="restaurant-form row g-3">
     <div class="col-md-8">
       <label class="form-label">Restaurant Name</label>
       <input type="text" name="name" placeholder="Restaurant Name" value="{{ restaurant.name }}" class="form-control">
