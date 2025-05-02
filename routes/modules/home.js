@@ -1,3 +1,6 @@
+const express = require('express')
+const router = express.Router()
+
 const Restaurant = require('../../models/restaurant') // 引用 restaurant model
 
 router.get('/', (req, res) => {
@@ -27,3 +30,5 @@ router.get('/', (req, res) => {
       }))
       .catch(error => console.log(error))
 })
+
+module.exports = router
