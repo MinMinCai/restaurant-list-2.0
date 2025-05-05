@@ -1,5 +1,6 @@
-const mongoose = require('mongoose')
 const Restaurant = require('../restaurant')
+const db = require('../../config/mongoose')
+
 const restaurantList = require('../../restaurant.json')
 const seed = restaurantList.results
 
@@ -7,13 +8,8 @@ const seed = restaurantList.results
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-mongoose.connect(process.env.MONGODB_URI)
-const db = mongoose.connection
-db.on('error', () => {
-  console.log('mongodb error!')
-})
+
 db.once('open', () => {
-  console.log('mongodb connected!')
   Restaurant.deleteMany() // 清空舊資料
     .then(() => Restaurant.create(seed)) // 插入 JSON 資料
     .then(() => {

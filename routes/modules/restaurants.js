@@ -1,6 +1,21 @@
 const express = require('express')
 const router = express.Router()
 const Restaurant = require('../../models/restaurant')
+const restaurantList = require('../../restaurant.json')
+
+router.get('/search', (req, res) => {
+  const keyword = req.query.keyword.toLowerCase()
+  Restaurant.find()
+    .lean()
+    .then(restaurants => {
+      const filteredRestaurants = restaurants.filter(restaurant => {
+        return restaurant.name.toLowerCase().includes(keyword) || 
+               restaurant.category.toLowerCase().includes(keyword)
+      })
+      res.render('index', { restaurants: filteredRestaurants, keyword: keyword })
+    })
+    .catch(error => console.log(error))
+})
 
 router.get('/new', (req, res) => {
     return res.render('new')
@@ -13,19 +28,19 @@ router.post('/', (req, res) => {
         .catch(error => console.log(error))
 })
 
-router.get('/:id', (req, res) => {
-    const id = req.params.id
-    return Restaurant.findById(id)
-        .lean()
-        .then((restaurant) => res.render('show', { restaurant }))
-        .catch(error => console.log(error))
-})
-
 router.get('/:id/edit', (req, res) => {
     const id = req.params.id
     return Restaurant.findById(id)
         .lean()
         .then((restaurant) => res.render('edit', { restaurant }))
+        .catch(error => console.log(error))
+})
+
+router.get('/:id', (req, res) => {
+    const id = req.params.id
+    return Restaurant.findById(id)
+        .lean()
+        .then((restaurant) => res.render('show', { restaurant }))
         .catch(error => console.log(error))
 })
 
@@ -43,21 +58,5 @@ router.delete('/:id', (req, res) => {
         .then(() => res.redirect('/'))
         .catch(error => console.log(error))
 })
-
-router.get('/search', (req, res) => {
-  const keyword = req.query.keyword.toLowerCase()
-  const filteredRestaurants = restaurantList.results.filter(restaurant => {
-    return restaurant.name.toLowerCase().includes(keyword) || restaurant.category.toLowerCase().includes(keyword)
-  })
-  res.render('index', { restaurants: filteredRestaurants, keyword: keyword })
-})
-
-router.get('/search', (req, res) => {
-    const keyword = req.query.keyword.toLowerCase()
-    const filteredRestaurants = restaurantList.results.filter(restaurant => {
-      return restaurant.name.toLowerCase().includes(keyword) || restaurant.category.toLowerCase().includes(keyword)
-    })
-    res.render('index', { restaurants: filteredRestaurants, keyword: keyword })
-  })
 
 module.exports = router
